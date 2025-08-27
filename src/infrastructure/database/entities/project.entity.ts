@@ -9,7 +9,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TaskEntity } from './task.entity';
+import {TaskEntity} from './task.entity';
 import { UserEntity } from './user.entity';
 
 @Entity('project')

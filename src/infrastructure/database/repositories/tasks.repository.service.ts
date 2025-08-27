@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, DeepPartial, Repository } from 'typeorm';
+import { DataSource, DeepPartial, Repository, UpdateResult } from 'typeorm';
 import { TaskEntity } from '../entities/task.entity';
 import { ITask } from 'src/domain/interfaces/task.interface';
 import { ITasksRepository } from 'src/domain/repositories/tasks-repository.interface';
@@ -17,7 +17,7 @@ export class TasksRepositoryService
 		return this.findBy({ user: { id: userId } });
 	}
 
-	findById(id: number): Promise<ITask> {
+	findById(id: number): Promise<ITask | null> {
 		return this.findOneBy({ id });
 	}
 
@@ -25,7 +25,10 @@ export class TasksRepositoryService
 		return this.save(payload) as Promise<ITask>;
 	}
 
-	updateById(payload: DeepPartial<ITask>) {
+	updateById(payload: DeepPartial<ITask>): Promise<UpdateResult> {
+		if (!payload.id) {
+			throw new Error('Id não pode ser nulo!');
+		}
 		return this.update(payload.id, payload);
 	}
 }

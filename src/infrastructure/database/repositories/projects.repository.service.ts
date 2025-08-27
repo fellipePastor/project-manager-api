@@ -17,7 +17,7 @@ export class ProjectsRepositoryService
 		return this.findBy({ user: { id: userId } });
 	}
 
-	findById(id: number): Promise<IProject> {
+	findById(id: number): Promise<IProject | null> {
 		return this.findOneBy({ id });
 	}
 
